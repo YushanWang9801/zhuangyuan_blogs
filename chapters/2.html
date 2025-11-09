@@ -4,11 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>金榜题名：中国历代状元文章精选</title>
+    <title>张柬之殿试卷解读（唐永昌元年己丑科）</title>
     <script src="https://cdn.tailwindcss.com/3.3.3"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <link rel="stylesheet" href="../static/style.css">
     <link rel="stylesheet" href="../static/1.css">
+    <script src="../static/tabs.js"></script>
 </head>
 
 <body class="min-h-screen">
@@ -27,7 +28,6 @@
                     您的浏览器不支持音频播放
                 </audio>
             </div>
-            <p class="subtitle text-center text-gray-500">*若商用，需要声明由扣子空间生成</p>
 
             <!-- 标签页组件 -->
             <div class="glassmorphism p-6">
@@ -227,7 +227,7 @@
                         <i class="fas fa-home"></i>
                         <span>返回首页</span>
                     </a>
-                    <a href="" class="nav-btn flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors text-gray-800">
+                    <a href="3.html" class="nav-btn flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors text-gray-800">
                         <span>下一篇</span>
                         <i class="fas fa-arrow-right"></i>
                     </a>
@@ -235,26 +235,5 @@
             </div>
         </div>
     </div>
-
-    <script>
-        const tabBtns = document.querySelectorAll('.tab-btn');
-        const tabContents = document.querySelectorAll('.tab-content');
-
-        tabBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                // 切换按钮激活状态
-                tabBtns.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-
-                // 切换内容显示
-                const tabId = btn.dataset.tab;
-                tabContents.forEach(content => {
-                    content.classList.remove('active');
-                });
-                document.getElementById(tabId).classList.add('active');
-            });
-        });
-    </script>
 </body>
-
 </html>

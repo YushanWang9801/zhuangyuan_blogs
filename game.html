@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>石头剪刀布生存战</title>
+    <link rel="stylesheet" href="static/game.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            font-family: Arial, sans-serif;
+        }
+        
+        .controls {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+        }
+        
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid white;
+            color: white;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+        
+        button:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        #gameArea {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+        }
+        
+        .element {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+            border-radius: 50%;
+            user-select: none;
+        }
+        
+        .element:hover {
+            transform: scale(1.2);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+        }
+        
+        .rock {
+            background: rgba(255, 99, 71, 0.8);
+            box-shadow: 0 0 10px rgba(255, 99, 71, 0.5);
+        }
+        
+        .paper {
+            background: rgba(135, 206, 235, 0.8);
+            box-shadow: 0 0 10px rgba(135, 206, 235, 0.5);
+        }
+        
+        .scissors {
+            background: rgba(255, 215, 0, 0.8);
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+        
+        .winner {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 48px;
+            color: white;
+            text-align: center;
+            display: none;
+            animation: pulse 2s infinite;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+        }
+        
+        @keyframes pulse {
+            0% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.1); }
+            100% { transform: translate(-50%, -50%) scale(1); }
+        }
+        
+        .stats {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: white;
+            font-size: 18px;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 15px;
+            border-radius: 10px;
+            min-width: 200px;
+        }
+        
+        .stat-item {
+            margin: 5px 0;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .stat-value {
+            font-weight: bold;
+        }
+        
+        .conversion-effect {
+            position: absolute;
+            pointer-events: none;
+            animation: conversion 1s ease-out forwards;
+        }
+        
+        @keyframes conversion {
+            0% {
+                transform: scale(1) rotate(0deg);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.5) rotate(180deg);
+                opacity: 0.8;
+            }
+            100% {
+                transform: scale(0) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="controls">
+        <button id="startBtn">开始游戏</button>
+        <button id="resetBtn">重置</button>
+        <button id="speedBtn">速度: 正常</button>
+    </div>
+    
+    <div class="stats">
+        <div class="stat-item">
+            <span>石头:</span>
+            <span class="stat-value" id="rockCount">0</span>
+        </div>
+        <div class="stat-item">
+            <span>布:</span>
+            <span class="stat-value" id="paperCount">0</span>
+        </div>
+        <div class="stat-item">
+            <span>剪刀:</span>
+            <span class="stat-value" id="scissorsCount">0</span>
+        </div>
+        <div class="stat-item">
+            <span>总数量:</span>
+            <span class="stat-value" id="totalCount">0</span>
+        </div>
+        <div class="stat-item">
+            <span>回合:</span>
+            <span class="stat-value" id="roundCount">0</span>
+        </div>
+    </div>
+    
+    <div id="gameArea"></div>
+    <div id="winner" class="winner"></div>
+
+    <script>
+        const gameArea = document.getElementById('gameArea');
+        const startBtn = document.getElementById('startBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const speedBtn = document.getElementById('speedBtn');
+        const winnerDisplay = document.getElementById('winner');
+        
+        let elementCount = 30; // 每种元素的初始数量
+        const elements = [];
+        let animationId;
+        let gameRunning = false;
+        let gameSpeed = 1;
+        let roundCount = 0;
+        let conversionCount = 0;
+        
+        // 速度选项
+        const speedOptions = [0.5, 1, 2, 3];
+        let currentSpeedIndex = 1;
+        
+        // 元素类
+        class GameElement {
+            constructor(type, x, y) {
+                this.type = type;
+                this.x = x;
+                this.y = y;
+                this.vx = (Math.random() - 0.5) * 4;
+                this.vy = (Math.random() - 0.5) * 4;
+                this.element = document.createElement('div');
+                this.element.className = `element ${type}`;
+                this.element.textContent = this.getSymbol();
+                this.updatePosition();
+                this.setupInteraction();
+                gameArea.appendChild(this.element);
+            }
+            
+            getSymbol() {
+                switch(this.type) {
+                    case 'rock': return '✊';
+                    case 'paper': return '✋';
+                    case 'scissors': return '✌️';
+                }
+            }
+            
+            updatePosition() {
+                this.element.style.left = `${this.x}px`;
+                this.element.style.top = `${this.y}px`;
+            }
+            
+            setupInteraction() {
+                // 点击元素可以手动转换它
+                this.element.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    this.convertToRandomType();
+                });
+            }
+            
+            convertToRandomType() {
+                const types = ['rock', 'paper', 'scissors'];
+                const currentIndex = types.indexOf(this.type);
+                const newIndex = (currentIndex + 1) % types.length;
+                this.convertToType(types[newIndex]);
+            }
+            
+            convertToType(newType) {
+                // 创建转换效果
+                const effect = document.createElement('div');
+                effect.className = 'conversion-effect';
+                effect.textContent = this.getSymbol();
+                effect.style.left = `${this.x}px`;
+                effect.style.top = `${this.y}px`;
+                effect.style.fontSize = '30px';
+                gameArea.appendChild(effect);
+                
+                setTimeout(() => {
+                    gameArea.removeChild(effect);
+                }, 1000);
+                
+                // 实际转换
+                this.type = newType;
+                this.element.className = `element ${this.type}`;
+                this.element.textContent = this.getSymbol();
+                conversionCount++;
+            }
+            
+            move() {
+                this.x += this.vx * gameSpeed;
+                this.y += this.vy * gameSpeed;
+                
+                // 边界检测 - 带有阻尼的反弹
+                if (this.x < 0) {
+                    this.x = 0;
+                    this.vx *= -0.8;
+                } else if (this.x > window.innerWidth - 50) {
+                    this.x = window.innerWidth - 50;
+                    this.vx *= -0.8;
+                }
+                
+                if (this.y < 0) {
+                    this.y = 0;
+                    this.vy *= -0.8;
+                } else if (this.y > window.innerHeight - 50) {
+                    this.y = window.innerHeight - 50;
+                    this.vy *= -0.8;
+                }
+                
+                this.updatePosition();
+            }
+            
+            checkCollision(other) {
+                const dx = this.x - other.x;
+                const dy = this.y - other.y;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+                
+                if (distance < 50) { // 碰撞距离
+                    return this.determineWinner(other);
+                }
+                return false;
+            }
+            
+            determineWinner(other) {
+                if (this.type === other.type) return false; // 相同类型不处理
+                
+                // 石头胜剪刀
+                if (this.type === 'rock' && other.type === 'scissors') {
+                    return { winner: this, loser: other };
+                }
+                // 剪刀胜布
+                if (this.type === 'scissors' && other.type === 'paper') {
+                    return { winner: this, loser: other };
+                }
+                // 布胜石头
+                if (this.type === 'paper' && other.type === 'rock') {
+                    return { winner: this, loser: other };
+                }
+                
+                // 否则是对方胜
+                return { winner: other, loser: this };
+            }
+            
+            // 被击败后的转换
+            beDefeated() {
+                // 随机决定是转换还是消失
+                if (Math.random() < 0.7) { // 70%概率转换
+                    const types = ['rock', 'paper', 'scissors'];
+                    const currentIndex = types.indexOf(this.type);
+                    let newIndex;
+                    do {
+                        newIndex = Math.floor(Math.random() * types.length);
+                    } while (newIndex === currentIndex);
+                    
+                    this.convertToType(types[newIndex]);
+                    return true; // 继续存在
+                } else {
+                    return false; // 消失
+                }
+            }
+            
+            // 胜利后的强化
+            beVictorious() {
+                // 胜利者获得速度提升
+                this.vx *= 1.1;
+                this.vy *= 1.1;
+                
+                // 限制最大速度
+                const maxSpeed = 8;
+                const currentSpeed = Math.sqrt(this.vx * this.vx + this.vy * this.vy);
+                if (currentSpeed > maxSpeed) {
+                    const ratio = maxSpeed / currentSpeed;
+                    this.vx *= ratio;
+                    this.vy *= ratio;
+                }
+                
+                // 添加胜利光环效果
+                this.element.style.boxShadow = '0 0 30px rgba(255, 255, 255, 0.8)';
+                setTimeout(() => {
+                    this.element.style.boxShadow = '';
+                }, 1000);
+            }
+        }
+        
+        // 初始化游戏
+        function initGame() {
+            clearElements();
+            roundCount = 0;
+            conversionCount = 0;
+            
+            // 创建石头、剪刀、布元素
+            for (let i = 0; i < elementCount; i++) {
+                const x = Math.random() * (window.innerWidth - 50);
+                const y = Math.random() * (window.innerHeight - 50);
+                elements.push(new GameElement('rock', x, y));
+                
+                const x2 = Math.random() * (window.innerWidth - 50);
+                const y2 = Math.random() * (window.innerHeight - 50);
+                elements.push(new GameElement('paper', x2, y2));
+                
+                const x3 = Math.random() * (window.innerWidth - 50);
+                const y3 = Math.random() * (window.innerHeight - 50);
+                elements.push(new GameElement('scissors', x3, y3));
+            }
+            
+            updateStats();
+        }
+        
+        // 清除所有元素
+        function clearElements() {
+            elements.length = 0;
+            while (gameArea.firstChild) {
+                gameArea.removeChild(gameArea.firstChild);
+            }
+            winnerDisplay.style.display = 'none';
+        }
+        
+        // 更新统计信息
+        function updateStats() {
+            const counts = {
+                rock: 0,
+                paper: 0,
+                scissors: 0
+            };
+            
+            elements.forEach(element => {
+                counts[element.type]++;
+            });
+            
+            document.getElementById('rockCount').textContent = counts.rock;
+            document.getElementById('paperCount').textContent = counts.paper;
+            document.getElementById('scissorsCount').textContent = counts.scissors;
+            document.getElementById('totalCount').textContent = elements.length;
+            document.getElementById('roundCount').textContent = roundCount;
+        }
+        
+        // 游戏主循环
+        function gameLoop() {
+            if (!gameRunning) return;
+            
+            roundCount++;
+            
+            // 移动所有元素
+            elements.forEach(element => {
+                element.move();
+            });
+            
+            // 检测碰撞
+            const collisionsToProcess = [];
+            
+            for (let i = 0; i < elements.length; i++) {
+                for (let j = i + 1; j < elements.length; j++) {
+                    const result = elements[i].checkCollision(elements[j]);
+                    if (result) {
+                        collisionsToProcess.push(result);
+                    }
+                }
+            }
+            
+            // 处理碰撞结果
+            const processedElements = new Set();
+            
+            collisionsToProcess.forEach(result => {
+                if (!processedElements.has(result.winner) && !processedElements.has(result.loser)) {
+                    // 胜利者获得强化
+                    result.winner.beVictorious();
+                    
+                    // 失败者可能被转换或消失
+                    const continueExisting = result.loser.beDefeated();
+                    
+                    if (!continueExisting) {
+                        // 移除失败的元素
+                        const loserIndex = elements.indexOf(result.loser);
+                        if (loserIndex !== -1) {
+                            gameArea.removeChild(elements[loserIndex].element);
+                            elements.splice(loserIndex, 1);
+                        }
+                    }
+                    
+                    processedElements.add(result.winner);
+                    processedElements.add(result.loser);
+                }
+            });
+            
+            // 更新统计信息
+            updateStats();
+            
+            // 检查游戏是否结束
+            checkGameEnd();
+            
+            animationId = requestAnimationFrame(gameLoop);
+        }
+        
+        // 检查游戏是否结束
+        function checkGameEnd() {
+            const types = new Set();
+            elements.forEach(element => {
+                types.add(element.type);
+            });
+            
+            // 如果只剩一种类型
+            if (types.size === 1) {
+                gameRunning = false;
+                const winnerType = types.values().next().value;
+                showWinner(winnerType);
+                
+                // 3秒后自动重新开始
+                setTimeout(() => {
+                    initGame();
+                    gameRunning = true;
+                    gameLoop();
+                }, 3000);
+            }
+            
+            // 如果所有元素都消失了，也重新开始
+            if (elements.length === 0) {
+                gameRunning = false;
+                setTimeout(() => {
+                    initGame();
+                    gameRunning = true;
+                    gameLoop();
+                }, 1000);
+            }
+        }
+        
+        // 显示胜利者
+        function showWinner(type) {
+            let winnerText = '';
+            switch(type) {
+                case 'rock': winnerText = '石头获胜! ✊'; break;
+                case 'paper': winnerText = '布获胜! ✋'; break;
+                case 'scissors': winnerText = '剪刀获胜! ✌️'; break;
+            }
+            
+            winnerDisplay.textContent = winnerText;
+            winnerDisplay.style.display = 'block';
+            winnerDisplay.className = `winner ${type}`;
+        }
+        
+        // 事件监听
+        startBtn.addEventListener('click', () => {
+            if (!gameRunning) {
+                gameRunning = true;
+                gameLoop();
+                startBtn.textContent = '暂停';
+            } else {
+                gameRunning = false;
+                startBtn.textContent = '继续';
+            }
+        });
+        
+        resetBtn.addEventListener('click', () => {
+            gameRunning = false;
+            startBtn.textContent = '开始游戏';
+            initGame();
+        });
+        
+        speedBtn.addEventListener('click', () => {
+            currentSpeedIndex = (currentSpeedIndex + 1) % speedOptions.length;
+            gameSpeed = speedOptions[currentSpeedIndex];
+            speedBtn.textContent = `速度: ${gameSpeed === 0.5 ? '慢' : gameSpeed === 1 ? '正常' : gameSpeed === 2 ? '快' : '非常快'}`;
+        });
+        
+        // 键盘快捷键
+        document.addEventListener('keydown', (e) => {
+            switch(e.key) {
+                case ' ':
+                    e.preventDefault();
+                    startBtn.click();
+                    break;
+                case 'r':
+                case 'R':
+                    resetBtn.click();
+                    break;
+                case 's':
+                case 'S':
+                    speedBtn.click();
+                    break;
+            }
+        });
+        
+        // 窗口大小改变时重新初始化
+        window.addEventListener('resize', () => {
+            if (!gameRunning) {
+                initGame();
+            }
+        });
+        
+        // 初始化
+        initGame();
+        gameRunning = true;
+        gameLoop();
+    </script>
+</body>
+</html>

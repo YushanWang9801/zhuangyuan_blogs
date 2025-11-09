@@ -4,11 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>金榜题名：中国历代状元文章精选</title>
+    <title>张昌龄状元策问解读（唐贞观二十年丙午科）</title>
     <script src="https://cdn.tailwindcss.com/3.3.3"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <link rel="stylesheet" href="../static/style.css">
     <link rel="stylesheet" href="../static/1.css">
+    <script src="../static/tabs.js"></script>
 </head>
 
 <body class="min-h-screen">
@@ -210,26 +211,5 @@
             </div>
         </div>
     </div>
-
-    <script>
-        const tabBtns = document.querySelectorAll('.tab-btn');
-        const tabContents = document.querySelectorAll('.tab-content');
-
-        tabBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                // 切换按钮激活状态
-                tabBtns.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-
-                // 切换内容显示
-                const tabId = btn.dataset.tab;
-                tabContents.forEach(content => {
-                    content.classList.remove('active');
-                });
-                document.getElementById(tabId).classList.add('active');
-            });
-        });
-    </script>
 </body>
-
 </html>
