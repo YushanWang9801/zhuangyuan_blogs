@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>金榜题名：中国历代状元文章精选</title>
+    <script src="https://cdn.tailwindcss.com/3.3.3"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="static/style.css">
+</head>
+<body class="min-h-screen">
+    <div class="container mx-auto px-4 py-8 max-w-6xl">
+        <div class="text-center mb-8">
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-2">金榜题名：中国历代状元文章精选</h1>
+            <p class="text-gray-600">走进科举制度的千年历史，解读历代状元的经典文章</p>
+        </div>
+
+        <div class="glassmorphism p-6 mb-8">
+            <div class="waveform mb-4" style="background-image: url('./images/background.png')"></div>
+            <div class="intro-text glassmorphism p-5 mb-6">
+                <p>科举制度是隋唐至清以考试选拔官吏的制度，自隋炀帝时始置进士科，至清光绪三十一年（1905年）废止科举考试为止，在中国历史上存续了约一千三百年。历代有诸多学子参与乡试、会试、殿试等各级考试。其中，殿试高中第一名者，便称为状元。朝廷通过殿试策问，提出有关经义或政事等问题，以简策问难，征求对答，用来考察应试者的学术水平和对国家政务的理解能力。</p>
+                <p class="mt-4">《金榜题名：中国历代状元文章精选》一书的核心价值在于系统收录了唐宋至明清50位状元的殿试原作——书中仅保留文章原文，并无额外解读与注释。考虑到古代策问涉及大量经史典故、时政背景，普通读者难免存在理解门槛，本博客特此推出「原文+解读+播客」的配套内容：每篇文章均搭配详细解读（梳理背景、解析要义、注释难点）与音频播客（沉浸式聆听，轻松理解核心思想），让千年状元文不再晦涩。</p>
+                
+                <div class="mt-6 p-4 bg-amber-50 rounded-lg border border-amber-100 flex items-center">
+                    <p class="font-medium text-amber-800 mr-3">📚 书籍电子版获取：</p>
+                    <a href="https://zlib.by/book/118254476/e45c08/%E9%87%91%E6%A6%9C%E9%A2%98%E5%90%8D%E4%B8%AD%E5%9B%BD%E5%8E%86%E4%BB%A3%E7%8A%B6%E5%85%83%E6%96%87%E7%AB%A0%E7%B2%BE%E9%80%89.html" class="text-blue-600 hover:text-blue-800 hover:underline flex items-center flex-1" target="_blank" rel="noopener noreferrer">
+                        <i class="fas fa-external-link-alt mr-2"></i>点击访问书籍电子版（原收录原文）
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="glassmorphism p-6 catalog-section">
+            <h2 class="catalog-title">历代状元文章目录</h2>
+            
+            <div class="dynasty-filter">
+                <button class="filter-btn active" data-filter="all">全部</button>
+                <button class="filter-btn" data-filter="唐">唐代</button>
+                <button class="filter-btn" data-filter="宋">宋代</button>
+                <button class="filter-btn" data-filter="明">明代</button>
+                <button class="filter-btn" data-filter="清">清代</button>
+            </div>
+
+            <div class="chapter-grid">
+                <!-- 唐代状元 -->
+                <div class="chapter-card" data-dynasty="唐">
+                    <span class="chapter-dynasty dynasty-tang">唐代</span>
+                    <h3 class="chapter-title">张昌龄      （唐贞观二十年丙午科）</h3>
+                    <p class="chapter-desc">惟尧则天，全颖阳之节；惟禹奠川，遂沧州之美。然则高洁之士，出于盛明，廉耻之宾，不生浇季。</p>
+                    <a href="chapters/1.html" class="chapter-link">阅读原文+听解读 <i class="fas fa-arrow-right"></i></a>
+                </div>
+
+                <div class="chapter-card" data-dynasty="唐">
+                    <span class="chapter-dynasty dynasty-tang">唐代</span>
+                    <h3 class="chapter-title">张柬之       （唐永昌元年己丑科）</h3>
+                    <p class="chapter-desc">武则天时期状元，针砭时弊，主张"任人唯贤"，批判科举制度中的形式主义，文风犀利，见解深刻。</p>
+                    <a href="chapters/唐/陈子昂-论贤才任用.html" class="chapter-link">阅读原文+听解读 <i class="fas fa-arrow-right"></i></a>
+                </div>
+
+                <!-- 宋代状元 -->
+                <div class="chapter-card" data-dynasty="宋">
+                    <span class="chapter-dynasty dynasty-song">宋代</span>
+                    <h3 class="chapter-title">张洎 - 殿试策问：论民生为本</h3>
+                    <p class="chapter-desc">宋太宗太平兴国五年状元，文章围绕"民为邦本"展开，提出轻徭薄赋、重视农桑的治国主张。</p>
+                    <a href="chapters/宋/张洎-论民生为本.html" class="chapter-link">阅读原文+听解读 <i class="fas fa-arrow-right"></i></a>
+                </div>
+
+                <div class="chapter-card" data-dynasty="宋">
+                    <span class="chapter-dynasty dynasty-song">宋代</span>
+                    <h3 class="chapter-title">王十朋 - 殿试策问：论君子之道</h3>
+                    <p class="chapter-desc">宋高宗绍兴二十七年状元，文章以儒家"君子之道"为核心，结合时政论述为官者的修身与治国责任。</p>
+                    <a href="chapters/宋/王十朋-论君子之道.html" class="chapter-link">阅读原文+听解读 <i class="fas fa-arrow-right"></i></a>
+                </div>
+
+                <!-- 明代状元 -->
+                <div class="chapter-card" data-dynasty="明">
+                    <span class="chapter-dynasty dynasty-ming">明代</span>
+                    <h3 class="chapter-title">杨慎 - 殿试策问：论礼制与治国</h3>
+                    <p class="chapter-desc">明武宗正德六年状元，明代三大才子之首，文章从礼制角度切入，论述"礼治"对国家稳定的重要性。</p>
+                    <a href="chapters/明/杨慎-论礼制与治国.html" class="chapter-link">阅读原文+听解读 <i class="fas fa-arrow-right"></i></a>
+                </div>
+
+                <div class="chapter-card" data-dynasty="明">
+                    <span class="chapter-dynasty dynasty-ming">明代</span>
+                    <h3 class="chapter-title">张居正 - 殿试策问：论改革兴邦</h3>
+                    <p class="chapter-desc">明世宗嘉靖二十六年状元，后来的内阁首辅，文章提出一系列改革主张，为其日后新政奠定思想基础。</p>
+                    <a href="chapters/明/张居正-论改革兴邦.html" class="chapter-link">阅读原文+听解读 <i class="fas fa-arrow-right"></i></a>
+                </div>
+
+                <!-- 清代状元 -->
+                <div class="chapter-card" data-dynasty="清">
+                    <span class="chapter-dynasty dynasty-qing">清代</span>
+                    <h3 class="chapter-title">张謇 - 殿试策问：论实业救国</h3>
+                    <p class="chapter-desc">清光绪二十年状元，著名实业家，文章突破传统经义，提出"实业救国"主张，开近代状元经商之先河。</p>
+                    <a href="chapters/清/张謇-论实业救国.html" class="chapter-link">阅读原文+听解读 <i class="fas fa-arrow-right"></i></a>
+                </div>
+
+                <div class="chapter-card" data-dynasty="清">
+                    <span class="chapter-dynasty dynasty-qing">清代</span>
+                    <h3 class="chapter-title">骆成骧 - 殿试策问：论君民关系</h3>
+                    <p class="chapter-desc">清光绪二十一年状元，文章以"君民同心"为核心，论述统治者应体恤民情、广纳民意的治国之道。</p>
+                    <a href="chapters/清/骆成骧-论君民关系.html" class="chapter-link">阅读原文+听解读 <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-8 text-center text-gray-600 text-sm">
+            <p>《金榜题名》系列播客 © 2025</p>
+            <p class="mt-1">作者 YushanWang9801 | 基于GitHub Pages部署 | 仅供学习交流</p>
+        </div>
+    </div>
+
+    <script>
+        // 1. 朝代筛选功能
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const chapterCards = document.querySelectorAll('.chapter-card');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // 切换按钮激活状态
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                const filter = btn.dataset.filter;
+
+                // 筛选章节卡片
+                chapterCards.forEach(card => {
+                    if (filter === 'all' || card.dataset.dynasty === filter) {
+                        card.style.display = 'block';
+                        // 添加淡入动画
+                        card.style.opacity = '0';
+                        setTimeout(() => {
+                            card.style.opacity = '1';
+                        }, 50);
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>唐代张柬之殿试卷解析</title>
+    <script src="https://cdn.tailwindcss.com/3.3.3"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+            line-height: 1.7;
+        }
+        .glassmorphism {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(16px);
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(31, 38, 135, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .glassmorphism:hover {
+            box-shadow: 0 15px 45px rgba(31, 38, 135, 0.15);
+            transform: translateY(-3px);
+        }
+        .speaker-a {
+            color: #4338ca;
+            font-weight: 600;
+            padding: 0.3rem 0.6rem;
+            border-radius: 6px;
+            background-color: rgba(67, 56, 202, 0.1);
+            transition: all 0.3s ease;
+        }
+        .speaker-b {
+            color: #059669;
+            font-weight: 600;
+            padding: 0.3rem 0.6rem;
+            border-radius: 6px;
+            background-color: rgba(5, 150, 105, 0.1);
+            transition: all 0.3s ease;
+        }
+        .speaker-a:hover, .speaker-b:hover {
+            transform: translateX(3px);
+        }
+        .transcript-container {
+            max-height: 65vh;
+            overflow-y: auto;
+            scroll-behavior: smooth;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 16px;
+        }
+        .transcript-container::-webkit-scrollbar {
+            width: 10px;
+        }
+        .transcript-container::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.03);
+            border-radius: 5px;
+        }
+        .transcript-container::-webkit-scrollbar-thumb {
+            background: rgba(67, 56, 202, 0.3);
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        .transcript-container::-webkit-scrollbar-thumb:hover {
+            background: rgba(67, 56, 202, 0.5);
+        }
+        .active-line {
+            background-color: rgba(67, 56, 202, 0.08);
+            border-left: 5px solid #4338ca;
+            margin-left: -1.5rem;
+            padding: 1rem 1.5rem;
+            border-radius: 0 8px 8px 0;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .waveform {
+            height: 160px;
+            width: 100%;
+            aspect-ratio: 21/9;
+            border-radius: 16px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        .waveform:hover {
+            transform: scale(1.01);
+        }
+        .transcript-container p {
+            margin-bottom: 1.5rem;
+            padding: 0.8rem 0;
+            line-height: 1.8;
+        }
+        .active-line {
+            margin: 1rem -2rem;
+            padding: 1.2rem 2rem;
+        }
+        .subtitle {
+            font-size: 0.875rem;
+            color: #64748b;
+            margin-top: -0.5rem;
+            margin-bottom: 1.5rem;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <div class="container mx-auto px-4 py-8 max-w-4xl">
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-bold text-gray-800 mb-2">张柬之殿试卷解析</h1>
+            <p class="text-gray-600">唐代科举制度与武则天时期政治文化的珍贵见证</p>
+        </div>
+
+        <div class="glassmorphism p-6 mb-8">
+            <div class="waveform mb-4" style="background-image: url('https://s.coze.cn/image/7bNEmC-u15g/')"></div>
+            
+            <div class="flex items-center justify-between mb-4">
+                <audio id="podcast-audio" controls class="w-full">
+                    <source src="https://lf-bot-studio-plugin-resource.coze.cn/obj/bot-studio-platform-plugin-tos/sami_podcast/tts/34811f764abb485eb050d940e6779a31.mp3" type="audio/mpeg">
+                    您的浏览器不支持音频播放
+                </audio>
+            </div>
+            <p class="subtitle text-center text-gray-500">*若商用，需要声明由扣子空间生成</p></div>
+         
+        <div class="glassmorphism p-6">
+            <h2 class="text-xl font-semibold mb-4 flex items-center">
+                <i class="fas fa-closed-captioning mr-2 text-indigo-500"></i>播客字幕
+            </h2>
+            
+            <div class="transcript-container p-4 bg-gray-50 rounded-lg" id="transcript">
+                <p class="mb-3"><span class="speaker-a">女生:</span> 哈喽大家好欢迎收听，我们的播客。然后今天呢我们要一起聊一聊，唐代的一份殿试卷。啊就是这个唐永昌元年，公元六八九年。这个贤良方正科第一名，张柬之的殿试卷。啊这可是一份，非常非常有价值的，历史文献啊。</p>
+                
+                <p class="mb-3"><span class="speaker-b">男生:</span> 听起来很有意思那我们就直接开始吧看看这份殿试卷是如何反映武则天时期的这个政治和文化的。</p>
+                
+                <p class="mb-3"><span class="speaker-a">女生:</span> 咱们先聊聊，为什么我们要读张柬之的殿试卷，它背后有什么意义？</p>
+                
+                <p class="mb-3"><span class="speaker-b">男生:</span> 就是这份殿试卷它是，唐代科举制度的一个缩影啊然后也能够让我们看到武则天时期的。政治理念，还有就是人才选拔的一些标准，就它是一个窗口。</p>
+                
+                <p class="mb-3"><span class="speaker-a">女生:</span> 武则天的这个第一道策问到底在问些什么？</p>
+                
+                <p class="mb-3"><span class="speaker-b">男生:</span> 她其实就是在讲。治理国家的关键啊，首先她就讲了这个设官分职啊要符合天道人伦。然后呢他又讲了自己想要。效仿上古的圣王啊来拯救这个末世。他的核心的困惑就在于。这个官员的考核和升降啊到底要怎么去，合理的实施，就他有这样的一个困惑。</p>
+                
+                <p class="mb-3"><span class="speaker-a">女生:</span> 听起来她对于国家治理还是有挺多自己的思考的啊。</p>
+                
+                <p class="mb-3"><span class="speaker-b">男生:</span> 是啊，而且就是从她的这个提问当中你能够感觉到。那个时代对于人才的选拔，还有就是官僚体系的优化是非常非常迫切的一件事情对。他其实是一个。怎么说吧就是这种改革的意识其实是贯穿了她整个这个问题的，核心。</p>
+                
+                <p class="mb-3"><span class="speaker-a">女生:</span> 张柬之在回答武则天的第一道策问的时候，他的核心观点是什么？</p>
+                
+                <p class="mb-3"><span class="speaker-b">男生:</span> 他其实一开始啊就是用孔子作春秋来比喻。武则天的这个统治啊，就是肯定他是顺应天命的然后也肯定了他的这个。治理国家的这个地位啊，同时呢他也。呃巧妙的引入了这种儒家的治国的理想。</p>
+                
+                <p class="mb-3"><span class="speaker-a">女生:</span> 哦，听起来还挺有策略的，那他具体对于官员的选拔有什么建议吗？</p>
+                
+                <p class="mb-3"><span class="speaker-b">男生:</span> 有啊，他就是，呃引用了这个尚书里面的话啊就是说。君主一定要英明然后臣子一定要贤能。他也批评了当时的这个。选拔的制度啊就是只看门第只看，这个功勋。啊，他就主张一定要，选真正有才能的人。同时呢他也强调，就是。继承古代的制度啊但是要，有所改革啊就是不能，一味的复古。</p>
+                
+                <p class="mb-3"><span class="speaker-a">女生:</span> 哎，那武则天的第二道策问又在问些什么呢？</p>
+                
+                <p class="mb-3"><span class="speaker-b">男生:</span> 呃这次呢她问的就是关于姓氏的文化啊还有就是。谱系的渊源啊，比如说什么北郭南宫啊，三乌五鹿啊。这些比较奇怪的姓啊她就问你这些姓是怎么来的啊，然后公孙啊，司马啊这些大家比较常见的姓她也问你是怎么来的。包括什么官制啊，呃这个。社会的等级制度啊等等，就是他其实是一个非常广的一个。</p>
+                
+                <p class="mb-3"><span class="speaker-a">女生:</span> 听起来她好像对这个很有研究啊，对这个姓氏文化。</p>
+                
+                <p class="mb-3"><span class="speaker-b">男生:</span> 对她肯定是有研究的呀，然后她其实这个问题里面也能够看出来她对于。门第啊，还有就是家族的背景的重视。同时呢也是在考察这个，应试者的这个学术的底蕴啊，同时也是在。思考如何去，优化这个社会的等级秩序。</p>
+                
+                <p class="mb-3"><span class="speaker-a">女生:</span> 张柬之又是怎么回答武则天的这个第二道策问的呢？</p>
+                
+                <p class="mb-3"><span class="speaker-b">男生:</span> 他就是非常系统的，把这个姓氏的来源啊，分成了几大类。比如说有的是，因，地而得姓啊，有的是因官而得姓啊然后。他还特别解释了，公孙啊，司马啊这些姓氏是怎么来的。他其实这种回答也是既展示了他自己非常深厚的史学的功底啊同时也是。间接的回应了，武则天对于。整顿吏治啊，厘清这种家族的谱系的这样的一个，政治上的需求。</p>
+                
+                <p class="mb-3"><span class="speaker-a">女生:</span> 哎，你说这个，唐永昌元年的这个贤良方正科。到底有什么特别的，为什么张柬之的这个殿试卷会被认为有这么高的文化价值呢？</p>
+                
+                <p class="mb-3"><span class="speaker-b">男生:</span> 就是因为这个，贤良方正科它本身是唐代非常重要的一个。选拔政治人才的这样的一个科目啊然后。这个张柬之他又是在已经六十四岁的高龄啊才中第的。他后来也是成为了这个神龙政变的核心人物啊就是恢复了李唐的江山。他的这个殿试卷。首先它是保存了武则天时期科举的原始的文献啊，同时呢它也。体现了唐代的这个以儒法合流为核心的这种治国的思想。同时呢他的文章也写的非常的漂亮啊就是那个时候的骈文啊，非常的。辞藻华丽又论证非常的严谨。</p>
+                
+                <p class="mb-3"><span class="speaker-a">女生:</span> 哎，你说我们今天读张柬之的这个殿试卷，到底有什么意义呢？</p>
+                
+                <p class="mb-3"><span class="speaker-b">男生:</span>
